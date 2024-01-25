@@ -4,7 +4,7 @@
 using namespace std;
 
 void avg (int x,int y, int z) {
-    cout << "Total is " << (x + y + z)/3 << endl;
+    cout << "Total is " << (x + y + z)/3 << "\n\n";
     return;
 }
 
@@ -33,6 +33,11 @@ void gg (int x) {
 }
 
 int main() {
+    int students;
+    cout << "Enter number of students ";
+    cin >> students;
+    cout << "\n";
+    for (int i = 0; i < students; i++) {
     int x,y,z;
     cout << "Enter English Marks ";
     cin >> x;
@@ -44,6 +49,6 @@ int main() {
     cin >> z;
     gg(z);
     tot(x,y,z);
-    avg(x,y,z);
+    avg(x,y,z); }
     return 0;
 }
