@@ -18,7 +18,7 @@ struct book {
     string genre;
 };
 
-void input(book books[], int num) {
+void input(book *books, int num) {
     books = new book[num];
     for (int i = 0; i < num; i++) {
         cout << "Enter the title: ";
@@ -37,42 +37,47 @@ void input(book books[], int num) {
     cout << "Inputs taken" << endl;
 }
 
-book *find(book books[], string query, string thing) {
+book *find(book *books, string query, string thing) {
+    book *found[] = sizeof(books)/sizeof(book);
+    int j = 0;
     switch (query) {
         case "title":
         for (int i = 0; i < sizeof(books)/sizeof(book);i++) {
             if (thing == books[i].title) {
-                return books[i];
+                found[j] = books[i];
+                j++;
             }
         }
-        return NULL;
+        return *found;
         break;
         case "author":
          for (int i = 0; i < sizeof(books)/sizeof(book);i++) {
             if (thing == books[i].author) {
-                return books[i];
+                found[j] = books[i];
+                j++;
             }
         }
-        return NULL;
+        return *found;
         break;
         case "genre":
          for (int i = 0; i < sizeof(books)/sizeof(book);i++) {
             if (thing == books[i].genre) {
-                return books[i];
+                found[j] = books[i];
+                j++;
             }
         }
-        return NULL;
+        return *found;
         break;
         default:
         return NULL;
     }
 }
 
-book find(book books[], string query,int date) {
+/* book *find(book *books, string query,int date) {
     switch (query) {
         case "day":
         for (int i = 0; i < sizeof(books)/sizeof(book);i++) {
-            if (date == books[i].day) {
+            if (date == books[i].dop) {
                 return books[i];
             }
         }
@@ -80,7 +85,7 @@ book find(book books[], string query,int date) {
         break;
         case "month":
          for (int i = 0; i < sizeof(books)/sizeof(book);i++) {
-            if (date == books[i].month) {
+            if (date == books[i].mop) {
                 return books[i];
             }
         }
@@ -88,7 +93,7 @@ book find(book books[], string query,int date) {
         break;
         case "year":
          for (int i = 0; i < sizeof(books)/sizeof(book);i++) {
-            if (date == books[i].year) {
+            if (date == books[i].yop) {
                 return books[i];
             }
         }
@@ -98,10 +103,11 @@ book find(book books[], string query,int date) {
         return NULL;
     }
 }
+*/
 
-void modify(book books[], string title,string auth,int day,int month,int year,string genre) {
+void modify(book *books, string title,string auth,int day,int month,int year,string genre) {
     for (int i = 0;i < sizeof(books)/sizeof(book);i++) {
-        if (title == books[i].title && auth == books[i].author && day == books[i].day && month == books[i].month && year == books[i].year && genre == books[i].genre) {
+        if (title == books[i].title && auth == books[i].author && day == books[i].dop && month == books[i].mop && year == books[i].yop && genre == books[i].genre) {
         cout << "Enter the title: ";
         getline(cin,books[i].title);
         cout << "Enter the author's name: ";
@@ -123,8 +129,10 @@ void modify(book books[], string title,string auth,int day,int month,int year,st
 }
 
 int main() {
-    book books = new book[1];
+    book *books = new book[10];
     char choice;
+    int day,month,year;
+    string auth,title,genre;
     cout << "For new book input press i; For Modification of book press m; For finding a book press f" << endl;
     switch (choice) {
         case 'i':
@@ -134,8 +142,6 @@ int main() {
         input(books,num);
         break;
         case 'm':
-        int day,month,year;
-        string auth,title,genre;
         cout << "Enter the title of book to be modified: ";
         getline(cin,title);
         cout << "Enter the author of book to be modified: ";
@@ -151,16 +157,18 @@ int main() {
         modify(books,title,auth,day,month,year,genre);
         break;
         case 'f':
-        string auth,title,ch;
+        string ch;
         cout << "Do you want to find a book by author name or title (enter 'author' or 'title')";
         cin >> ch;
         if (ch == "title") {
             cout << "Enter the title of book to be found: ";
             getline(cin,title);
+            book *found = find(books,ch,auth);
         }
         else {
             cout << "Enter the author of book to be found: ";
             getline(cin,auth);
+            book *found = find(books,ch,auth);
         }
     }
     return 0;
