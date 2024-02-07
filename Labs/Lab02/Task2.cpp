@@ -48,7 +48,7 @@ book *find(book *books, string query, string thing) {
                 j++;
             }
         }
-        return *found;
+        return found;
         break;
         case "author":
          for (int i = 0; i < sizeof(books)/sizeof(book);i++) {
@@ -57,7 +57,7 @@ book *find(book *books, string query, string thing) {
                 j++;
             }
         }
-        return *found;
+        return found;
         break;
         case "genre":
          for (int i = 0; i < sizeof(books)/sizeof(book);i++) {
@@ -66,7 +66,7 @@ book *find(book *books, string query, string thing) {
                 j++;
             }
         }
-        return *found;
+        return found;
         break;
         default:
         return NULL;
