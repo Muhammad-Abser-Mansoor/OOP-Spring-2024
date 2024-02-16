@@ -8,43 +8,45 @@
  #include <vector>
 
  class Pet{
-
+    
+    public:
     std::string hstatus;
+    std::string id;
     int hunger;
     std::string specie;
     int happy;     // Attributes
     std::vector<std::string> ss;
 
-    public:
-
-    Pet(std::string species) { // Default Constructor
+    Pet() { // Default Constructor
         hstatus = "Healthy";
         hunger = 0;
+        id = "0";
         happy = 10;
-        specie = species;
+        specie = "";
         char y;
-        while (finish != 'y') {
+        while (y != 'y') {
             std::string skill = "";
-            std::cout << "Enter special skills. If no skills are present just press enter " >> std::endl;
-            cin.ignore();
-            getline(cin,skill);
+            std::cout << "Enter special skills. If no skills are present just press enter " << std::endl;
+            std::cin.ignore();
+            getline(std::cin,skill);
             ss.push_back(skill);
             std::cout << "Is that all? press y to finish ";
             std::cin >> y;
         }
     }
 
-     Pet(std::string nhstatus, int nhunger, int nhappy, std::string species) { // Constructor
+     Pet(std::string nhstatus, int nhunger, int nhappy, std::string species, std::string nid) { // Constructor
         hstatus = nhstatus;
         specie = species;
         hunger = nhunger;
         happy = nhappy;
+        id = nid;
         char y;
-        while (finish != 'y') {
+        while (y != 'y') {
             std::string skill = "";
-            std::cout << "Enter special skills. If no skills are present just press enter " >> std::endl;
-            cin.ignore();
-            getline(cin,skill);
+            std::cout << "Enter special skills. If no skills are present just press enter " << std::endl;
+            std::cin.ignore();
+            getline(std::cin,skill);
             std::cout << "Is that all? press y to finish ";
             std::cin >> y;
         }
@@ -52,7 +54,7 @@
 
     void displayPetDetails() {
 
-        std::cout << "Specie: " << specie << std:;endl
+        std::cout << "Specie: " << specie << std::endl
         << "Health Status: " << hstatus
         << std::endl << "Hunger level: " << hunger << std::endl
         << "Happiness Level: " << happy << std::endl
@@ -75,11 +77,11 @@
     void updateHunger(int newhunger) {
 
         if (happy < 10) {
-            happy -= newhunger-hungry;
-            hungry = newhunger;
+            happy -= newhunger-hunger;
+            hunger = newhunger;
             return;
         }
-        hungry = newhunger;
+        hunger = newhunger;
     }
  };
 
@@ -96,21 +98,20 @@
         mobilenum = mmobilenum;
     }
 
-    void list(int numofpets) {
+    void list() {
 
         char end;
+        std::cin.ignore();
 
         while(end != 'y') {
 
-            std::string status,specie;
+            std::string status,specie,id;
             int hunger,happy;
 
             std::cout << "Enter status of the adopted pet: ";
-            std::cin.ignore();
             getline(std::cin,status);
 
             std::cout << "Enter specie of the adopted pet: ";
-            std::cin.ignore();
             getline(std::cin,specie);
 
             std::cout << "Enter Hunger level of the adopted pet: ";
@@ -118,7 +119,10 @@
 
             std::cout << "Enter Happiness level of the adopted pet: ";
             std::cin >> happy;
-            adoptedpetrecords.push_back(Pet(status,hunger,happy,specie));
+
+            std::cout << "Enter id of the adopted pet: ";
+            getline(std::cin,id);
+            adoptedpetrecords.push_back(Pet(status,hunger,happy,specie,id));
 
             std::cout << "Is that all? press y to finish ";
             std::cin >> end;
@@ -127,43 +131,56 @@
 
     }
 
-    void adoptpet() {
+    void adoptpet(std::vector<Pet> pets) {
 
         std::string status;
-        std::string specie;
-        int hunger,happy;
+        std::string specie,id;
+        int hunger,happy,check;
+        std::cin.ignore();
+
+        std::cout << "Enter id of the adopted pet: ";
+        getline(std::cin,id);
+
+        for (Pet element : pets) {
+
+            if (element.id == id) {
+                check = 1;
+                break;
+            }
+
+        }
+
+        if (check != 1) {
+            std::cout << "Pet unavailable in stock" << std::endl;
+            return;
+        }
 
         std::cout << "Enter status of the adopted pet: ";
-        std::cin.ignore();
         getline(std::cin,status);
 
         std::cout << "Enter specie of the adopted pet: ";
-        std::cin.ignore();
         getline(std::cin,specie);
-
-        std::cout << "Enter status of the adopted pet: ";
-        std::cin.ignore();
-        getline(std::cin,status);
 
         std::cout << "Enter Hunger level of the adopted pet: ";
         std::cin >> hunger;
 
         std::cout << "Enter Happiness level of the adopted pet: ";
         std::cin >> happy;
-        adoptedpetrecords.push_back(Pet(status,hunger,happy,specie));
+        adoptedpetrecords.push_back(Pet(status,hunger,happy,specie,id));
 
     }
 
     void returnpet() {
-
+        
         adoptedpetrecords.erase(adoptedpetrecords.begin());
+        std::cout << "Pet returned" << std::endl;
         
     }
 
     void displayAdoptedpets() {
 
-        for (Pet pets: this->adoptedpetrecords) {
-            std::cout << pets.displayPetDetails << std::endl;
+        for (Pet pets: adoptedpetrecords) {
+            pets.displayPetDetails();
         }
 
     }
@@ -172,18 +189,180 @@
 
  int main() {
 
-    Pet pets[2];
+    std::vector<Pet> pets;
+    int choice;
 
-    for (int i = 0; i < 2; i++) {
-        std::string specie;
+    std::cin.ignore();
+    char end = 't';
+
+    while (end != 'y') {
+        std::string status,specie,id;
+        int hunger,happy;
+
+        std::cout << "Enter status of the pet in stock: ";
+        getline(std::cin,status);
+
         std::cout << "Enter specie of the pet in stock: ";
-        std::cin.ignore();
         getline(std::cin,specie);
-        pets[i] = Pet(specie);
+
+        std::cout << "Enter id of the pet in stock: ";
+        getline(std::cin,id);
+
+        std::cout << "Enter Hunger level of the pet in stock: ";
+        std::cin >> hunger;
+
+        std::cout << "Enter Happiness level of the pet in stock: ";
+        std::cin >> happy;
+        pets.push_back(Pet(status,hunger,happy,specie,id));
+
+        std::cout << "Is that all? press y to finish ";
+        std::cin >> end; 
+        
     }
 
-    pets[0].updateHappiness();
-    pets[0].updateHealth();
-    pets[0].updateHunger();
+    while (choice != 0) {
+        std::cout << "1 -> Press if customer\n" << "2 -> Perform action on a pet in stock" << "0 -> End\n" << std::endl;
+        std::cin >> choice;
 
- }
+        switch (choice) {
+
+            case 1:
+
+            std::string name,mobilenum;
+            int choic;
+
+            std::cin.ignore();
+            std::cout << "Enter name of the customer: ";
+            getline(std::cin,name);
+
+            std::cout << "Enter mobile number of the customer: ";
+            getline(std::cin,mobilenum);
+
+            Adopter customer(name,mobilenum);
+
+            char fork;
+            std::cout << "Does the customer have previous pets? y for yes: ";
+            std::cin >> fork;
+
+            if (fork == 'y') {
+                customer.list();
+            }
+
+            std::cout << "1 -> Adopt new pet\n" << "2 -> Return Pet" << "3 -> Display owned pets\n" << std::endl;
+            std::cin >> choic;
+
+            switch (choic) {
+
+                case 1:
+                customer.adoptpet(pets);
+                break;
+
+                case 2:
+                customer.returnpet();
+                break;
+
+                case 3:
+                customer.displayAdoptedpets();
+                break;
+
+            }
+            break;
+
+            case 2:
+
+            std::string iid;
+            std::cin.ignore();
+            std::cout << "Enter id of the pet to be modified: ";
+            getline(std::cin,iid);
+
+            int choose;
+            int check = 0;
+
+            std::cout << "1 -> Update Happiness\n" << "2 -> Update Hunger\n" <<
+             "3 -> Update Health status\n" << "4 -> Display details\n";
+            std::cin >> choose;
+
+            switch (choose) {
+
+                case 1:
+                
+                int happy;
+                std::cout << "Enter new happiness: ";
+                std::cin >> happy;
+
+                for (Pet element : pets) {
+
+                    if (element.id == iid) {
+                        check = 1;
+                        element.updateHappiness(happy);
+                        break;
+                    }
+                }
+
+                if (check != 1) {
+                    std::cout << "Pet unavailable in stock" << std::endl;
+                }
+                break;
+
+                case 2:
+
+                int hungry;
+                std::cout << "Enter new hungry: ";
+                std::cin >> hungry;
+
+                for (Pet element : pets) {
+
+                if (element.id == iid) {
+                    check = 1;
+                    element.updateHunger(hungry);
+                    break;
+                }
+            }
+
+                if (check != 1) {
+                    std::cout << "Pet unavailable in stock" << std::endl;
+                }
+                break;
+
+                case 3:
+
+                std::string status;
+                std::cin.ignore();
+                std::cout << "Enter new health status: ";
+                getline(std::cin,status);
+
+                for (Pet element : pets) {
+
+                    if (element.id == iid) {
+                        check = 1;
+                        element.updateHealth(status);
+                        break;
+                    }
+                }
+
+                if (check != 1) {
+                    std::cout << "Pet unavailable in stock" << std::endl;
+                }
+                break;
+
+                case 4:
+                for (Pet element : pets) {
+
+                    if (element.id == iid) {
+                        check = 1;
+                        element.displayPetDetails();
+                        break;
+                    }
+                }
+
+                if (check != 1) {
+                    std::cout << "Pet unavailable in stock" << std::endl;
+                }
+                break;
+
+            }
+            
+            break;
+        } 
+    }  
+}
