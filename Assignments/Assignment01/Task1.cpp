@@ -114,14 +114,15 @@
             std::cout << "Enter specie of the adopted pet: ";
             getline(std::cin,specie);
 
+            std::cout << "Enter id of the adopted pet: ";
+            getline(std::cin,id);
+
             std::cout << "Enter Hunger level of the adopted pet: ";
             std::cin >> hunger;
 
             std::cout << "Enter Happiness level of the adopted pet: ";
             std::cin >> happy;
 
-            std::cout << "Enter id of the adopted pet: ";
-            getline(std::cin,id);
             adoptedpetrecords.push_back(Pet(status,hunger,happy,specie,id));
 
             std::cout << "Is that all? press y to finish ";
@@ -189,10 +190,10 @@
 
  int main() {
 
+    std::cout << "You will be entering pet(s) into stock first" <<std::endl;
+
     std::vector<Pet> pets;
     int choice;
-
-    std::cin.ignore();
     char end = 't';
 
     while (end != 'y') {
@@ -200,6 +201,7 @@
         int hunger,happy;
 
         std::cout << "Enter status of the pet in stock: ";
+        std::cin.ignore();
         getline(std::cin,status);
 
         std::cout << "Enter specie of the pet in stock: ";
@@ -221,13 +223,13 @@
     }
 
     while (choice != 0) {
-        std::cout << "1 -> Press if customer\n" << "2 -> Perform action on a pet in stock" << "0 -> End\n" << std::endl;
+        std::cout << "1 -> Press if customer\n" << "2 -> Perform action on a pet in stock\n" << "0 -> End\n" << std::endl;
         std::cin >> choice;
 
         switch (choice) {
 
             case 1:
-
+            {
             std::string name,mobilenum;
             int choic;
 
@@ -241,6 +243,7 @@
             Adopter customer(name,mobilenum);
 
             char fork;
+            char ending;
             std::cout << "Does the customer have previous pets? y for yes: ";
             std::cin >> fork;
 
@@ -248,7 +251,8 @@
                 customer.list();
             }
 
-            std::cout << "1 -> Adopt new pet\n" << "2 -> Return Pet" << "3 -> Display owned pets\n" << std::endl;
+            while (ending != 'y') {
+            std::cout << "1 -> Adopt new pet\n" << "2 -> Return Pet\n" << "3 -> Display owned pets\n" << std::endl;
             std::cin >> choic;
 
             switch (choic) {
@@ -265,11 +269,18 @@
                 customer.displayAdoptedpets();
                 break;
 
+            } 
+            
+            std::cout << "Is that all? press y to finish ";
+            std::cin >> ending; 
+            } 
+            
             }
+
             break;
 
             case 2:
-
+            {
             std::string iid;
             std::cin.ignore();
             std::cout << "Enter id of the pet to be modified: ";
@@ -277,6 +288,9 @@
 
             int choose;
             int check = 0;
+            char ending;
+            
+            while (ending != 'y') {
 
             std::cout << "1 -> Update Happiness\n" << "2 -> Update Hunger\n" <<
              "3 -> Update Health status\n" << "4 -> Display details\n";
@@ -285,7 +299,7 @@
             switch (choose) {
 
                 case 1:
-                
+                {
                 int happy;
                 std::cout << "Enter new happiness: ";
                 std::cin >> happy;
@@ -301,11 +315,11 @@
 
                 if (check != 1) {
                     std::cout << "Pet unavailable in stock" << std::endl;
-                }
+                } }
                 break;
-
+                
                 case 2:
-
+                {
                 int hungry;
                 std::cout << "Enter new hungry: ";
                 std::cin >> hungry;
@@ -321,11 +335,11 @@
 
                 if (check != 1) {
                     std::cout << "Pet unavailable in stock" << std::endl;
-                }
+                } }
                 break;
-
+                
                 case 3:
-
+                {
                 std::string status;
                 std::cin.ignore();
                 std::cout << "Enter new health status: ";
@@ -342,10 +356,11 @@
 
                 if (check != 1) {
                     std::cout << "Pet unavailable in stock" << std::endl;
-                }
+                } }
                 break;
-
+        
                 case 4:
+                {
                 for (Pet element : pets) {
 
                     if (element.id == iid) {
@@ -358,10 +373,15 @@
                 if (check != 1) {
                     std::cout << "Pet unavailable in stock" << std::endl;
                 }
+                }
                 break;
 
             }
-            
+
+            std::cout << "Is that all? press y to finish ";
+            std::cin >> ending;
+            }
+            }
             break;
         } 
     }  
