@@ -1,6 +1,6 @@
 /* Programmer: Muhammad Abser Mansoor
  * Date: 15/2/2024
- * Desc.: FAST Tables
+ * Desc.: Pet shop database
  */
 
  #include <iostream>
@@ -10,16 +10,16 @@
  #define MAX_TABLES 5
 
  class Table{
-    
+
+    public:
+
     const int totalseats;
     int occupied;
     int free;
     bool clean;
 
-    public:
+    Table() : totalseats(4) {
 
-    Table() {
-        totalseats = 4;
         occupied = 0;
         free = 4;
         clean = true;
@@ -31,17 +31,27 @@
 
         occupied += people;
         free = totalseats - occupied;
+        std::cout << "Table occupied by " << occupied << " people" << std::endl;
 
     }
 
     void CleanTable() {
 
         clean = true;
+        std::cout << "Table cleaned" << std::endl;
+        return;
     }
 
     void Eat(bool eaten) {
 
-        if (eaten) clean = false;
+        if (eaten) { 
+            clean = false;
+            std::cout << "Lunch Eaten" << std::endl;
+        }
+        else {
+            std::cout << "Lunch not eaten" << std::endl;
+        }
+        return;
     }
 };
 
@@ -52,30 +62,34 @@
 
             if (element.clean) {
 
-                element.totalseats >= people ? element.Seating(people) : continue;
-                return i;
-
+                if (element.totalseats >= people) {
+                    element.Seating(people);
+                    return i;
+                }
             }
+            i++;
         }
         std::cout << "No suitable table could be found" << std::endl;
+        return -1;
     }
 
  void EmptyTable(int tablenumber, std::vector<Table> tables) {
 
         tables[tablenumber].occupied = 0;
-        tables[tablenumber].free = totalseats;
+        tables[tablenumber].free = tables[tablenumber].totalseats;
+        std::cout << "Table emptied" << std::endl;
 
     }
 
 int main() {
 
     std::vector<Table> tables;
-    auto it = tables.begin(); // Iterator
+    int it = 0; // Iterator
     int total;
 
-    while (it != tables.end()) {
+    while (it < 5) {
 
-        std::cout << "Enter Capacity: " << std::endl;
+        std::cout << "Enter Capacity: ";
         std::cin >> total;
 
         tables.push_back(Table(total));
@@ -87,7 +101,7 @@ int main() {
 
     tables[table1].Eat(false); // Using the table
     tables[table1].Eat(true); // Having lunch on the table
-    tables[table1].CleanTable(true); // Cleaning the table
+    tables[table1].CleanTable(); // Cleaning the table
 
     EmptyTable(table1,tables); // Leaving the table
     EmptyTable(table2,tables); // Emptying table 2
