@@ -1,6 +1,6 @@
 /* Programmer: Muhammad Abser Mansoor
  * Date: 15/2/2024
- * Desc.: Pet shop database
+ * Desc.: FAST Tables management
  */
 
  #include <iostream>
