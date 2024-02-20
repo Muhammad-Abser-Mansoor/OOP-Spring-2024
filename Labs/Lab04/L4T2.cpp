@@ -1,6 +1,6 @@
 /* Programmer: Muhammad Abser Mansoor
  * Date: 15/2/2024
- * Desc.: Book Class
+ * Desc.: Revised Book Class
  */
 
  #include <iostream>
