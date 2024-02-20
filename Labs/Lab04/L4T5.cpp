@@ -1,6 +1,6 @@
 /* Programmer: Muhammad Abser Mansoor
  * Date: 15/2/2024
- * Desc.: Office class
+ * Desc.: Revised Office class
  */
 
  #include <iostream>
@@ -15,17 +15,17 @@ class Office{
 
     public:
 
-    Office() : Location("") , SeatingCapacity(0) , furniture(nullptr) {}
+    Office() : Location("") , SeatingCapacity(0) , furniture(nullptr) {} // Default Constructor
 
     Office(std::string fur1, std::string fur2, std::string fur3, std::string loc, int cap, int size) : Location(loc) , SeatingCapacity(cap) {
     
-        furniture = new std::string[size];
+        furniture = new std::string[size]; // DMA
         furniture[0] = fur1;
         furniture[1] = fur2;
         furniture[2] = fur3;
     }
     
-    ~Office() {
+    ~Office() { // Destructor
         delete[] furniture;
     }
 };
