@@ -32,7 +32,7 @@
         curday = cur;
     }
 
-    std::string getCurrentDay() {
+    std::string getCurrentDay() { // All user inputs are assuming that Sunday (for the user) is 1 and Saturday is 7
 
         return days[curday-1];
     }
