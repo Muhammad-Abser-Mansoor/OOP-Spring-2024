@@ -52,8 +52,9 @@
     std::vector<BankAccount> accounts;
     accounts.push_back(BankAccount(1,"Abser",500));
     accounts.push_back(BankAccount(2,"Fasih",0));
+    accounts.push_back(BankAccount(3,"Ali",1000));
 
-    for (int i = 0; i < 2;i++) {
+    for (int i = 0; i < 3;i++) {
         std::cout << std::endl;
         accounts[i].display();
         accounts[i].deposit(500);
