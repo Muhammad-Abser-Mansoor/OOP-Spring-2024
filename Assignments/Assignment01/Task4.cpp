@@ -7,6 +7,11 @@
 #include <string>
 #include <vector>
 
+void Header() {
+
+    std::cout << "Muhammad Abser Mansoor\n23K-0030" << std::endl; 
+}
+
 class RollerCoaster {
 
     std::string name;
@@ -156,6 +161,8 @@ class RollerCoaster {
 
 int main() {
 
+    Header();
+    
     RollerCoaster RC1;
     RollerCoaster RC2("Better Coaster", 400, 1000, 0, 40, 0);
 
@@ -188,4 +195,3 @@ int main() {
     std::cout << RC2.getRideInProgress() << std::endl;
 
 }
-    
