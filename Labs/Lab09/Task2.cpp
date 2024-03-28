@@ -149,6 +149,8 @@ int main() {
             break;
         }
 
+        shape->displayProperties();
+
         cout << "Do you want to calculate properties for another shape? (yes/no): ";
         cin >> choice;
         if (choice == "yes") {
