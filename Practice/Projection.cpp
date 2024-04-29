@@ -38,7 +38,7 @@ int main()
     sh1.setFillColor(sf::Color::Black);
     sh1.setOutlineColor(sf::Color::White);
     sh1.setOutlineThickness(10.f);
-    sf::RectangleShape l2(sf::Vector2f(10.f,100.f));
+    sf::RectangleShape l2(sf::Vector2f(10.f,120.f));
     l2.setPosition(sf::Vector2f(274.f,60.f));
 
     while (window.isOpen())
