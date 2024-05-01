@@ -97,6 +97,7 @@ class ReconDrone : public Drone, public Flyable, public Scannable {
 };
 
 int main() {
+    srand(time(NULL));
     try {
 
         ReconDrone drone(40.7128, -74.0060, 100, 30, 12, 8);
