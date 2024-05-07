@@ -5,10 +5,11 @@ class Account {
 protected:
     int account_number;
     double balance;
+    static int accounts;
 
 public:
 
-    Account() : account_number(Account::account_count++), balance(0.f) {}
+    Account() : account_number(Account::accounts++), balance(0.f) {}
 
     virtual void deposit(double amount) = 0;
     virtual double withdraw(double amount) = 0;
@@ -17,6 +18,8 @@ public:
     int getAccountNumber() const { return this->account_number; }
     double getBalance() const { return this->balance; }
 };
+
+int Account::accounts = 0;
 
 class SavingsAccount : public Account {
 
@@ -29,7 +32,7 @@ public:
     void deposit(double amount) override { this->balance += amount; }
     double withdraw(double amount) override {
         if (this->balance < amount) {
-            cout << "Insufficient balance" << endl;
+            std::cout << "Insufficient balance" << std::endl;
             return 0.f;
         }
 
@@ -53,7 +56,7 @@ public:
     void deposit(double amount) override { this->balance += amount; }
     double withdraw(double amount) override {
         if (this->overdraft_limit < amount) {
-            cout << "Overdraft limit reached" << endl;
+            std::cout << "Overdraft limit reached" << std::endl;
             return 0.f;
         }
 
